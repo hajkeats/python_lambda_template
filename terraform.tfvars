@@ -1,0 +1,6 @@
+function_name = "example"
+handler_name = "hello_world"
+region = "eu-west-2"
+runtime = "python3.8"
+source_code_dir = "src"
+timeout = "300"
