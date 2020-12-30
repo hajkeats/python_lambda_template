@@ -2,7 +2,7 @@
 
 This repository contains terraform which can be used to wrap python code with its dependencies for deployment in AWS as a lambda function.
 
-It uses 2 scripts to wrap and the dependencies with the code, and then cleanup upon deployment.
+It uses 2 scripts to wrap the dependencies with the code, and then cleanup upon deployment.
 
 The terraform is written with CI/CD in mind. Edit the python as you wish and simply rerun the `terraform apply` command to recreate the lambda function.
 
@@ -22,7 +22,7 @@ export AWS_ACCESS_KEY_ID="<ACCESS KEY>"
 export AWS_SECRET_ACCESS_KEY="<SECRET KEY>"
 ```
 
-Setup a directory for the source code of your lambda and at the same level download or clone this directory, and rename it 'terraform', e.g.
+Setup a directory for the source code of your lambda, and at the same level download or clone this directory. You may wish to rename it 'terraform', e.g.
 ```
 - src
     - __init__.py
@@ -41,7 +41,7 @@ Edit the `terraform.tfvars` so that the variable values make sense. Descriptions
 
 ## Deployment
 
-From inside the terraform repository run the following commands to deploy the code:
+From inside the terraform directory run the following commands to deploy the code:
 
 ```
 terraform init
