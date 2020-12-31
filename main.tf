@@ -34,6 +34,18 @@ resource "aws_iam_role" "lambda_role" {
 EOF
 }
 
+
+## Cloudwatch IAM access
+
+resource "aws_lambda_permission" "allow_cloudwatch_to_call_lambda" {
+    statement_id = "AllowExecutionFromCloudWatch"
+    action = "lambda:InvokeFunction"
+    function_name = aws_lambda_function.lambda.function_name
+    principal = "events.amazonaws.com"
+    source_arn = aws_cloudwatch_event_rule.once_a_day.arn
+}
+
+
 ### Create lambda packaging
 
 resource "null_resource" "install_python_dependencies" {
@@ -79,6 +91,20 @@ resource "aws_lambda_function" "lambda" {
       }
     }
 }
+
+### Cron scheduler
+
+resource "aws_cloudwatch_event_rule" "once_a_day" {
+    name                = "lambda_scheduler"
+    description         = "Schedule events for lambda, 9AM each day"
+    schedule_expression = "cron(0 9 * * ? *)"
+}
+
+resource "aws_cloudwatch_event_target" "lambda_scheduler_target" {
+    rule =  aws_cloudwatch_event_rule.once_a_day.name
+    arn  =   aws_lambda_function.lambda.arn
+}
+
 
 ### Cleanup lambda packaging
 
