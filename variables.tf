@@ -8,6 +8,11 @@ variable "handler_name" {
   type        = string
 }
 
+variable "league_id" {
+  description = "The id for the FPL league to monitor"
+  type        = string
+}
+
 variable "lambda_env" {
   description = "The directory of the lambda python virtualenv"
   type        = string

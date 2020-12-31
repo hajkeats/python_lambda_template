@@ -72,6 +72,12 @@ resource "aws_lambda_function" "lambda" {
     runtime          = var.runtime
     source_code_hash = data.archive_file.lambda_package_zip.output_base64sha256
     timeout          = var.timeout
+
+    environment {
+      variables = {
+        LEAGUE_ID = var.league_id
+      }
+    }
 }
 
 ### Cleanup lambda packaging
