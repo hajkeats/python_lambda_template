@@ -87,7 +87,10 @@ resource "aws_lambda_function" "lambda" {
 
     environment {
       variables = {
-        LEAGUE_ID = var.league_id
+        LEAGUE_ID   = var.league_id
+        THREAD_ID   = var.thread_id
+        FB_EMAIL    = var.facebook_email
+        FB_PASSWORD = var.facebook_password
       }
     }
 }

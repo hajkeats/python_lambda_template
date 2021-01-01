@@ -1,3 +1,13 @@
+variable "facebook_email" {
+  description = "The email address used to login to facebook with the lambda"
+  type        = string
+}
+
+variable "facebook_password" {
+  description = "The password used to login to facebook with the lambda"
+  type        = string
+}
+
 variable "function_name" {
   description = "The function name for the lambda"
   type        = string
@@ -37,6 +47,11 @@ variable "runtime" {
 
 variable "source_code_dir" {
   description = "The location of the lambda source code"
+  type        = string
+}
+
+variable "thread_id" {
+  description = "The thread id of the facebook messenger chat"
   type        = string
 }
 
