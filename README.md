@@ -37,6 +37,8 @@ Setup a directory for the source code of your lambda, and at the same level down
 
 Edit the `terraform.tfvars` so that the variable values make sense. Descriptions for the variables can be found in `variables.tf`.
 
+> Note: Where I use this repo as a submodule, I create a branch for any changes I make specific to be used for the parent repo. Any changes I make to master may then get merged into the branches, but the branches won't get merged into master!
+
 ---
 
 ## Deployment
