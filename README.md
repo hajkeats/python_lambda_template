@@ -47,7 +47,7 @@ From inside the terraform directory run the following commands to deploy the cod
 
 ```
 terraform init
-terraform plan -var-file terraform.tfvars
 terraform apply
+# When prompted, type 'yes' and hit enter
 ```
 This should create a lambda within AWS. Go look!
