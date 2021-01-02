@@ -1,4 +1,6 @@
-# Python Lambda Template
+# Python Lambda Template - FPL Bot branch
+
+> Note: This branch is for the fantasy premier league facebook bot found [here](https://github.com/hajkeats/fpl_bot). As such changes have been made in the Terraform; to permissions, triggers and environment variables for the lambda.
 
 This repository contains terraform which can be used to wrap python code with its dependencies for deployment in AWS as a lambda function.
 
