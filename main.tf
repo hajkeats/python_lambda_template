@@ -46,6 +46,19 @@ resource "aws_lambda_permission" "allow_cloudwatch_to_call_lambda" {
 }
 
 
+## Cloudwatch logs 
+
+resource "aws_cloudwatch_log_group" "lambda_log_group" {
+  name              = "/aws/lambda/${var.function_name}"
+  retention_in_days = 14
+}
+
+resource "aws_iam_role_policy_attachment" "basic_lambda_policy" {
+  role       = "${aws_iam_role.lambda_role.name}"
+  policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+}
+
+
 ### Create lambda packaging
 
 resource "null_resource" "install_python_dependencies" {
@@ -93,6 +106,8 @@ resource "aws_lambda_function" "lambda" {
         FB_PASSWORD = var.facebook_password
       }
     }
+    depends_on = [aws_cloudwatch_log_group.lambda_log_group]
+
 }
 
 ### Cron scheduler
