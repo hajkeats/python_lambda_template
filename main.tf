@@ -100,10 +100,12 @@ resource "aws_lambda_function" "lambda" {
 
     environment {
       variables = {
-        LEAGUE_ID   = var.league_id
-        THREAD_ID   = var.thread_id
-        FB_EMAIL    = var.facebook_email
-        FB_PASSWORD = var.facebook_password
+        LEAGUE_ID    = var.league_id
+        THREAD_ID    = var.thread_id
+        FB_EMAIL     = var.facebook_email
+        FB_PASSWORD  = var.facebook_password
+        FPL_EMAIL    = var.fpl_email
+        FPL_PASSWORD = var.fpl_password
       }
     }
     depends_on = [aws_cloudwatch_log_group.lambda_log_group]

@@ -8,6 +8,16 @@ variable "facebook_password" {
   type        = string
 }
 
+variable "fpl_email" {
+  description = "The email address used to login to fpl with the lambda"
+  type        = string
+}
+
+variable "fpl_password" {
+  description = "The password used to login to fpl with the lambda"
+  type        = string
+}
+
 variable "function_name" {
   description = "The function name for the lambda"
   type        = string
