@@ -115,7 +115,7 @@ resource "aws_lambda_function" "lambda" {
 resource "aws_cloudwatch_event_rule" "once_a_day" {
     name                = "lambda_scheduler"
     description         = "Schedule events for lambda, 9AM each day"
-    schedule_expression = "cron(0 9 * * ? *)"
+    schedule_expression = "cron(30 09 * * ? *)"
 }
 
 resource "aws_cloudwatch_event_target" "lambda_scheduler_target" {
