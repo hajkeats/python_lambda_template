@@ -34,6 +34,20 @@ resource "aws_iam_role" "lambda_role" {
 EOF
 }
 
+
+## Cloudwatch logs 
+
+resource "aws_cloudwatch_log_group" "lambda_log_group" {
+  name              = "/aws/lambda/${var.function_name}"
+  retention_in_days = 14
+}
+
+resource "aws_iam_role_policy_attachment" "basic_lambda_policy" {
+  role       = "${aws_iam_role.lambda_role.name}"
+  policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+}
+
+
 ### Create lambda packaging
 
 resource "null_resource" "install_python_dependencies" {
@@ -72,6 +86,9 @@ resource "aws_lambda_function" "lambda" {
     runtime          = var.runtime
     source_code_hash = data.archive_file.lambda_package_zip.output_base64sha256
     timeout          = var.timeout
+
+    depends_on = [aws_cloudwatch_log_group.lambda_log_group]
+
 }
 
 ### Cleanup lambda packaging
