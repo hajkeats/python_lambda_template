@@ -1,3 +1,4 @@
+dynamo_table_name = "Sessions"
 function_name = "h2h_bot"
 handler_name = "bot_handler"
 region = "eu-west-2"

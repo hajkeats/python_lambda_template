@@ -81,6 +81,47 @@ resource "aws_iam_role_policy_attachment" "lambda_logs" {
   policy_arn = aws_iam_policy.lambda_logging.arn
 }
 
+### Dynamo DB Table
+
+resource "aws_dynamodb_table" "dynamodb_table" {
+  name           = var.dynamo_table_name
+  billing_mode   = "PAY_PER_REQUEST"
+  hash_key       = "Name"
+
+  attribute {
+    name = "Name"
+    type = "S"
+  }
+}
+
+resource "aws_iam_policy" "lambda_dynamodb" {
+  name        = "lambda_dynamodb"
+  path        = "/"
+  description = "IAM policy for accessing dynamodb from a lambda"
+
+  policy = <<EOF
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Action": [
+        "dynamodb:PutItem",
+        "dynamodb:UpdateItem",
+        "dynamodb:GetItem"
+      ],
+      "Resource": "${aws_dynamodb_table.dynamodb_table.arn}",
+      "Effect": "Allow"
+    }
+  ]
+}
+EOF
+}
+
+resource "aws_iam_role_policy_attachment" "lambda_dynamodb" {
+  role       = aws_iam_role.lambda_role.name
+  policy_arn = aws_iam_policy.lambda_dynamodb.arn
+}
+
 ### Create lambda packaging
 
 resource "null_resource" "install_python_dependencies" {
@@ -128,6 +169,7 @@ resource "aws_lambda_function" "lambda" {
         FB_PASSWORD  = var.facebook_password
         FPL_EMAIL    = var.fpl_email
         FPL_PASSWORD = var.fpl_password
+        DYNAMO_TABLE = var.dynamo_table_name
       }
     }
     depends_on = [aws_cloudwatch_log_group.lambda_log_group]
@@ -139,7 +181,7 @@ resource "aws_lambda_function" "lambda" {
 resource "aws_cloudwatch_event_rule" "once_a_day" {
     name                = "lambda_scheduler"
     description         = "Schedule events for lambda, 9AM each day"
-    schedule_expression = "cron(30 09 * * ? *)"
+    schedule_expression = "cron(15 10 * * ? *)"
 }
 
 resource "aws_cloudwatch_event_target" "lambda_scheduler_target" {

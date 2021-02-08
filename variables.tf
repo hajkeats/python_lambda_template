@@ -1,3 +1,8 @@
+variable "dynamo_table_name" {
+  description = "The name for the dynamo table"
+  type        = string
+}
+
 variable "facebook_email" {
   description = "The email address used to login to facebook with the lambda"
   type        = string
